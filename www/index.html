@@ -1,0 +1,248 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Polymer Starter Kit">
+  <title>Park You</title>
+
+  <!-- Place favicon.ico in the `app/` directory -->
+
+  <!-- Chrome for Android theme color -->
+  <meta name="theme-color" content="#2E3AA1">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Tile color for Win8 -->
+  <meta name="msapplication-TileColor" content="#3372DF">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="PSK">
+  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+
+  <!-- Tile icon for Win8 (144x144) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild-->
+
+  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <!-- endbuild -->
+
+  <!-- Because this project uses vulcanize this should be your only html import
+       in this file. All other imports should go in elements.html -->
+  <link rel="import" href="elements/elements.html">
+
+  <!-- For shared styles, shared-styles.html import in elements.html -->
+  <style is="custom-style" include="shared-styles"></style>
+  <style>
+    google-map {
+      height: 600px;
+    }
+  </style>
+</head>
+
+<body unresolved>
+  <!-- build:remove -->
+  <span id="browser-sync-binding"></span>
+  <!-- endbuild -->
+
+  <template is="dom-bind" id="app">
+
+    <paper-drawer-panel id="paperDrawerPanel">
+      <!-- Drawer Scroll Header Panel -->
+      <paper-scroll-header-panel drawer fixed>
+
+        <!-- Drawer Toolbar -->
+        <paper-toolbar id="drawerToolbar">
+          <span class="menu-name">Menu</span>
+        </paper-toolbar>
+
+        <!-- Drawer Content -->
+        <paper-menu class="app-menu" attr-for-selected="data-route" selected="[[route]]">
+          <a data-route="login" href="{{baseUrl}}">
+            <span>Login</span>
+          </a>
+
+          <a data-route="cc" href="{{baseUrl}}cc">
+            <span>Credit Card Info</span>
+          </a>
+
+          <a data-route="map" href="{{baseUrl}}map">
+            <span>Booking</span>
+          </a>
+        </paper-menu>
+      </paper-scroll-header-panel>
+
+      <!-- Main Area -->
+      <paper-scroll-header-panel main id="headerPanelMain">
+        <!-- Main Toolbar -->
+        <paper-toolbar id="mainToolbar">
+          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+
+          <span class="space"></span>
+
+          <!-- Toolbar icons --
+          <paper-icon-button icon="refresh"></paper-icon-button>
+          <paper-icon-button icon="search"></paper-icon-button>
+          -->
+
+          <!-- Application name -->
+          <div class="middle middle-container">
+            <div class="app-name">Park You</div>
+          </div>
+        </paper-toolbar>
+
+        <!-- Main Content -->
+        <div class="content">
+          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+            
+            <section data-route="home" tabindex="-1">
+              
+              <paper-material elevation="1">
+                <h1>Login</h1>
+                <paper-input label="Username"></paper-input>
+                <paper-input label="Password" type="password"></paper-input>
+                <br><br>
+                <a href$="{{baseUrl}}cc">
+                  <paper-button raised data-route="users">Login</paper-button>
+                </a>
+
+                
+
+              </paper-material>
+              <div style="text-align: center">
+              or<br>
+              <a href$="{{baseUrl}}cc">
+                <paper-button raised data-route="users" style="background:#3b5998; color:#fff;">Login with Facebook</paper-button>
+              </a>
+              </div>
+            </section>
+
+            <section data-route="cc" tabindex="-1">
+              <paper-material elevation="1">
+                <gold-cc-input auto-validate required card-type="[[cardType]]" label="Credit Card Number"></gold-cc-input>
+                <gold-cc-expiration-input auto-validate required label="Expiry Date"></gold-cc-expiration-input>
+                <gold-cc-cvc-input auto-validate required card-type="[[cardType]]"></gold-cc-cvc-input>
+                <a href$="{{baseUrl}}map">
+                  <paper-button raised data-route="users"><iron-icon icon="save"></iron-icon> Save</paper-button>
+                </a>
+              </paper-material>
+            </section>
+
+            <section data-route="map" tabindex="-1">
+              <paper-material elevation="1">
+                <a href$="{{baseUrl}}booking">
+                <google-map fit-to-markers>
+                  <google-map-marker latitude="3.0732491" longitude="101.5602316"  clickEvents="true" google-map-marker-click="{{markerClicked}}"></google-map-marker>
+                </google-map>
+                </a>
+              </paper-material>
+            </section>
+
+            <section data-route="booking" tabindex="-1">
+              <paper-material elevation="1">
+                
+                <table width="100%">
+                  <tr>
+                    <td>Location</td>
+                    <td>: Glenmarie SuperPark</td>
+                  </tr>
+                  <tr>
+                    <td>Available </td>
+                    <td>: 8/20</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">: <paper-input label="date" type="date" placeholder="Date"></paper-input></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">: <paper-input label="time" type="time" placeholder="Time"></paper-input></td>
+                  </tr>
+                  
+                </table>
+                <a href$="{{baseUrl}}confirm">
+                  <paper-button raised data-route="users">Book</paper-button>
+                </a>
+                
+              </paper-material>
+            </section>
+
+            <section data-route="confirm" tabindex="-1">
+              <paper-material elevation="1">
+                <table width="100%">
+                  <tr>
+                    <td>Location</td>
+                    <td>: Glenmarie SuperPark</td>
+                  </tr>
+                  <tr>
+                    <td>Available </td>
+                    <td>: 8/20</td>
+                  </tr>
+                  <tr>
+                    <td>Date </td>
+                    <td>: 29 Apr 2016</td>
+                  </tr>
+                  <tr>
+                    <td>Time </td>
+                    <td>: 14:30</td>
+                  </tr>
+                  
+                </table>
+                <div style="text-align: center">
+                  <img src="images/qr.jpg">
+                </div>
+              </paper-material>
+            </section>
+
+            <section data-route="user-info" tabindex="-1">
+              <paper-material elevation="-1">
+                <h1 class="page-title" tabindex="-1">User: {{params.name}}</h1>
+                <div>This is {{params.name}}'s section</div>
+              </paper-material>
+            </section>
+
+            <section data-route="contact" tabindex="-1">
+              <paper-material elevation="1">
+                <h1 class="page-title" tabindex="-1">Contact</h1>
+                <p>This is the contact section</p>
+              </paper-material>
+            </section>
+          </iron-pages>
+        </div>
+      </paper-scroll-header-panel>
+    </paper-drawer-panel>
+
+    <paper-toast id="toast">
+      <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
+    </paper-toast>
+
+  </template>
+
+  <!-- build:js scripts/app.js -->
+  <script src="scripts/app.js"></script>
+  <!-- endbuild-->
+</body>
+
+</html>
